@@ -93,24 +93,42 @@ namespace cuoiki.Controllers
         // Xử lý lưu thông tin chỉnh sửa sản phẩm với các ràng buộc
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductId,NamePro,DecriptionPro,Category,Price,ImagePro,ManufacturingDate")] Product product)
         {
             if (id != product.ProductId)
             {
                 return NotFound();
             }
 
-            // Kiểm tra Category hợp lệ
+            // Kiểm tra và thêm các thông báo lỗi tùy chỉnh
             var allowedCategories = new[] { "Vợt", "Bóng", "Cầu", "Đệm", "Quần áo" };
-            if (!allowedCategories.Contains(product.Category))
+            
+            // Kiểm tra Category
+            if (string.IsNullOrEmpty(product.Category))
             {
-                ModelState.AddModelError("Category", "Category phải là một trong các giá trị: Vợt, Bóng, Cầu, Đệm, Quần áo.");
+                ModelState.AddModelError("Category", "Vui lòng chọn loại sản phẩm");
+            }
+            else if (!allowedCategories.Contains(product.Category))
+            {
+                ModelState.AddModelError("Category", "Loại sản phẩm không hợp lệ. Vui lòng chọn: Vợt, Bóng, Cầu, Đệm hoặc Quần áo");
             }
 
-            // Kiểm tra ManufacturingDate hợp lệ
+            // Kiểm tra Price
+            if (product.Price.HasValue && product.Price.Value <= 0)
+            {
+                ModelState.AddModelError("Price", "Giá sản phẩm phải lớn hơn 0");
+            }
+
+            // Kiểm tra ManufacturingDate
             if (product.ManufacturingDate >= DateOnly.FromDateTime(DateTime.Now))
             {
-                ModelState.AddModelError("ManufacturingDate", "ManufacturingDate phải nhỏ hơn ngày hiện tại.");
+                ModelState.AddModelError("ManufacturingDate", "Ngày sản xuất phải nhỏ hơn ngày hiện tại");
+            }
+
+            // Thêm thông báo lỗi chung nếu có nhiều lỗi
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError(string.Empty, "Vui lòng kiểm tra lại thông tin sản phẩm");
             }
 
             if (ModelState.IsValid)

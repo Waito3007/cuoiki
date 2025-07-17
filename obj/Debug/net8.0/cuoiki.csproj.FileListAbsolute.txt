@@ -169,3 +169,4 @@ C:\SAN\TH_LTWNC\cuoiki\obj\Debug\net8.0\refint\cuoiki.dll
 C:\SAN\TH_LTWNC\cuoiki\obj\Debug\net8.0\cuoiki.pdb
 C:\SAN\TH_LTWNC\cuoiki\obj\Debug\net8.0\cuoiki.genruntimeconfig.cache
 C:\SAN\TH_LTWNC\cuoiki\obj\Debug\net8.0\ref\cuoiki.dll
+C:\SAN\TH_LTWNC\cuoiki\obj\Debug\net8.0\cuoiki.sourcelink.json

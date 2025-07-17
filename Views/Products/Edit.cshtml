@@ -1,42 +1,73 @@
 @model cuoiki.Models.Product
 @{
-    ViewData["Title"] = "Edit Product";
+    ViewData["Title"] = "Chỉnh sửa sản phẩm";
 }
 
-<h2>Edit Product</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">@ViewData["Title"]</h2>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="ProductId" />
-    <div class="form-group">
-        <label asp-for="NamePro" class="control-label"></label>
-        <input asp-for="NamePro" class="form-control" />
-        <span asp-validation-for="NamePro" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="DecriptionPro" class="control-label"></label>
-        <textarea asp-for="DecriptionPro" class="form-control"></textarea>
+    <div class="card">
+        <div class="card-body">
+            <form asp-action="Edit" asp-route-id="@Model.ProductId" method="post">
+                <input type="hidden" asp-for="ProductId" />
+                
+                @if (!ViewData.ModelState.IsValid)
+                {
+                    <div class="alert alert-danger mb-3">
+                        <h5 class="alert-heading">
+                            <i class="bi bi-exclamation-triangle-fill"></i> 
+                            Có lỗi xảy ra
+                        </h5>
+                        <div asp-validation-summary="ModelOnly" class="mb-0"></div>
+                    </div>
+                }
+                
+                <div class="form-group mb-3">
+                    <label asp-for="NamePro" class="form-label"></label>
+                    <input asp-for="NamePro" class="form-control" />
+                    <span asp-validation-for="NamePro" class="text-danger"></span>
+                </div>
+    <div class="form-group mb-3">
+        <label asp-for="DecriptionPro" class="form-label"></label>
+        <textarea asp-for="DecriptionPro" class="form-control" rows="3"></textarea>
         <span asp-validation-for="DecriptionPro" class="text-danger"></span>
     </div>
-   <!-- gọi view component CategorySelector -->
-    @await Component.InvokeAsync("CategorySelector", new { selectedCategory = Model.Category })
-    <span asp-validation-for="Category" class="text-danger"></span>
-    <div class="form-group">
-        <label asp-for="Price" class="control-label"></label>
-        <input asp-for="Price" class="form-control" />
+
+    <div class="form-group mb-3">
+        <!-- gọi view component CategorySelector -->
+        @await Component.InvokeAsync("CategorySelector", new { selectedCategory = Model.Category })
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <div class="input-group">
+            <input asp-for="Price" class="form-control" />
+            <span class="input-group-text">VNĐ</span>
+        </div>
         <span asp-validation-for="Price" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="ImagePro" class="control-label"></label>
+
+    <div class="form-group mb-3">
+        <label asp-for="ImagePro" class="form-label"></label>
         <input asp-for="ImagePro" class="form-control" />
         <span asp-validation-for="ImagePro" class="text-danger"></span>
     </div>
-    <div class="form-group">
-        <label asp-for="ManufacturingDate" class="control-label"></label>
+
+    <div class="form-group mb-3">
+        <label asp-for="ManufacturingDate" class="form-label"></label>
         <input asp-for="ManufacturingDate" class="form-control" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="ManufacturingDate" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a asp-action="FirstDetail" class="btn btn-secondary">Cancel</a>
+
+    <div class="form-group d-flex justify-content-between mt-4">
+        <a asp-action="FirstDetail" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Quay lại
+        </a>
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Lưu thay đổi
+        </button>
+    </div>
 </form>
 
 @section Scripts {
