@@ -1,0 +1,35 @@
+@model IEnumerable<cuoiki.Models.Product>
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<h2>Product List</h2>
+<a asp-action="Create" class="btn btn-success mb-2">Thêm sản phẩm mới</a>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Manufacturing Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductId</td>
+            <td>@item.NamePro</td>
+            <td>@item.Category</td>
+            <td>@item.Price</td>
+            <td>@item.ManufacturingDate.ToString("yyyy-MM-dd")</td>
+            <td>
+                <a asp-action="FirstDetail" asp-route-id="@item.ProductId" class="btn btn-info btn-sm">Chi tiết</a>
+                <a asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-warning btn-sm">Sửa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

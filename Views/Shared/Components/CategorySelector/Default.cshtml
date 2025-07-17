@@ -1,0 +1,10 @@
+@model (IEnumerable<string> Categories, string SelectedCategory)
+
+<select name="Category" class="form-control">
+    @foreach (var category in Model.Categories)
+    {
+        <option value="@category" selected="@(category == Model.SelectedCategory ? "selected" : null)">
+            @category
+        </option>
+    }
+</select>

@@ -1,0 +1,53 @@
+@model cuoiki.Models.Product
+@{
+    ViewData["Title"] = "Thêm sản phẩm mới";
+    var categories = ViewBag.Categories as string[];
+}
+
+<h2>Thêm sản phẩm mới</h2>
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="NamePro" class="control-label"></label>
+        <input asp-for="NamePro" class="form-control" />
+        <span asp-validation-for="NamePro" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DecriptionPro" class="control-label"></label>
+        <textarea asp-for="DecriptionPro" class="form-control"></textarea>
+        <span asp-validation-for="DecriptionPro" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Category" class="control-label"></label>
+        <select asp-for="Category" class="form-control">
+            <option value="">-- Chọn loại --</option>
+            @if (categories != null)
+            {
+                foreach (var cat in categories)
+                {
+                    <option value="@cat">@cat</option>
+                }
+            }
+        </select>
+        <span asp-validation-for="Category" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price" class="control-label"></label>
+        <input asp-for="Price" class="form-control" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImagePro" class="control-label"></label>
+        <input asp-for="ImagePro" class="form-control" />
+        <span asp-validation-for="ImagePro" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ManufacturingDate" class="control-label"></label>
+        <input asp-for="ManufacturingDate" class="form-control" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="ManufacturingDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
